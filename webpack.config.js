@@ -1,12 +1,13 @@
 // @ts-check
 
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
-// const isDevelopment = !isProduction;
 console.log('isProduction', isProduction);
 
+const mode = process.env.NODE_ENV || 'development';
+
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  devtool: mode === 'development' ? 'inline-source-map' : false,
+  mode,
   entry: [`${__dirname}/src/index.js`],
   externals: {
     gon: 'gon',
@@ -15,12 +16,15 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
+    filename: '[name].bundle.js',
     path: `${__dirname}/dist/public`,
     publicPath: '/assets/',
   },
-  plugins: [
-    // new MiniCssExtractPlugin(),
-  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   module: {
     rules: [
       {
