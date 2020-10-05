@@ -16,3 +16,7 @@ $ make install
 $ make start
 # open http://localhost:5000
 ```
+
+You can see this project in action:
+
+- Heroku - <https://chat-slack-chessiah.herokuapp.com>
