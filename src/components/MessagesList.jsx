@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Message from './Message';
 import MessageForm from './MessageForm';
 
+const mapStateToProps = ({ messages }) => {
+  return { messages };
+};
+
 const MessagesList = (props) => {
   const { messages } = props;
-  console.log('messages', messages);
 
   return (
     <div className="col d-flex flex-column h-100">
@@ -19,4 +23,4 @@ const MessagesList = (props) => {
   );
 };
 
-export default MessagesList;
+export default connect(mapStateToProps)(MessagesList);

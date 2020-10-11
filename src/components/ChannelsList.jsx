@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Channel from './Channel';
 
+const mapStateToProps = ({ channels, currentChannelId }) => {
+  return { channels, currentChannelId };
+};
+
 const ChannelsList = (props) => {
   const { channels, currentChannelId } = props;
-  console.log('channels', channels);
-  console.log('currentChannelId', currentChannelId);
 
   return (
     <div className="col-3 border-right">
@@ -28,4 +31,4 @@ const ChannelsList = (props) => {
   );
 };
 
-export default ChannelsList;
+export default connect(mapStateToProps)(ChannelsList);
