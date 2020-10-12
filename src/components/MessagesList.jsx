@@ -6,8 +6,12 @@ import MessageForm from './MessageForm';
 
 import UserContext from '../userContext.js';
 
-const mapStateToProps = ({ messages }) => {
-  return { messages };
+const mapStateToProps = ({ messages, currentChannelId }) => {
+  return {
+    messages: messages.filter(
+      (message) => message.channelId === currentChannelId,
+    ),
+  };
 };
 
 const MessagesList = (props) => {
@@ -16,10 +20,10 @@ const MessagesList = (props) => {
 
   return (
     <div className="col d-flex flex-column h-100">
-      <div className="d-flex py-2 px-1 border-bottom">
+      <div className="d-flex justify-content-center py-2 px-1 border-bottom">
         <span className="h6 m-0">{username}</span>
       </div>
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 my-3 overflow-auto">
         {messages.map((message) => (
           <Message key={message.id} message={message} />
         ))}

@@ -1,21 +1,30 @@
 import React, { useContext, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 
+import * as actions from '../actions/index.js';
+import store from '../store.js';
 import UserContext from '../userContext.js';
 
-const MessageForm = () => {
+const mapStateToProps = ({ currentChannelId }) => {
+  return { currentChannelId };
+};
+
+const MessageForm = (props) => {
+  const { currentChannelId } = props;
   const username = useContext(UserContext);
 
-  const handleSubmit = (values, { resetForm }) => {
-    if (values.message.trim() !== '') {
-      console.log(username, values);
+  const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
+    if (text.trim() !== '') {
+      store.dispatch(actions.addMessage({ currentChannelId, username, text }));
       resetForm();
     }
+    setSubmitting(false);
   };
 
   const formik = useFormik({
     initialValues: {
-      message: '',
+      text: '',
     },
     onSubmit: handleSubmit,
   });
@@ -33,14 +42,16 @@ const MessageForm = () => {
       <fieldset>
         <div className="input-group">
           <input
-            ref={ref}
-            onChange={formik.handleChange}
             className="form-control"
-            name="message"
-            value={formik.values.message}
+            disabled={formik.isSubmitting}
+            name="text"
+            placeholder="Enter message"
+            ref={ref}
+            value={formik.values.text}
+            onChange={formik.handleChange}
           />
           <div className="input-group-append">
-            <button type="submit" className="btn btn-primary btn-sm">
+            <button className="btn btn-primary btn-sm" type="submit">
               Submit
             </button>
           </div>
@@ -50,4 +61,4 @@ const MessageForm = () => {
   );
 };
 
-export default MessageForm;
+export default connect(mapStateToProps)(MessageForm);

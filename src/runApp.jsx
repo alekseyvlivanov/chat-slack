@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import actions from './actions/index.js';
+import * as actions from './actions/index.js';
 import socket from './socket.js';
 import store from './store.js';
 
@@ -13,20 +13,20 @@ const runApp = ({ channels, messages, currentChannelId }) => {
   store.dispatch(actions.addMessages({ messages }));
   store.dispatch(actions.setCurrentChannel({ currentChannelId }));
 
-  socket.on('newChannel', (data) => {
-    console.log('newChannel', data);
+  socket.on('newChannel', ({ data: { attributes } }) => {
+    console.log('newChannel', attributes);
   });
 
-  socket.on('removeChannel', (data) => {
-    console.log('removeChannel', data);
+  socket.on('removeChannel', ({ data: { attributes } }) => {
+    console.log('removeChannel', attributes);
   });
 
-  socket.on('renameChannel', (data) => {
-    console.log('renameChannel', data);
+  socket.on('renameChannel', ({ data: { attributes } }) => {
+    console.log('renameChannel', attributes);
   });
 
-  socket.on('newMessage', (data) => {
-    console.log('newMessage', data);
+  socket.on('newMessage', ({ data: { attributes } }) => {
+    store.dispatch(actions.addMessageSuccess({ message: { ...attributes } }));
   });
 
   render(

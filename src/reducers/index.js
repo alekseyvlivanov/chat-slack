@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 
-import actions from '../actions/index.js';
+import * as actions from '../actions/index.js';
 
 const channelsReducer = handleActions(
   {
@@ -19,6 +19,9 @@ const messagesReducer = handleActions(
       ...state,
       ...messages,
     ],
+    [actions.addMessageSuccess]: (state, { payload: { message } }) => {
+      return [...state, message];
+    },
   },
   [],
 );
