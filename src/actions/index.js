@@ -1,5 +1,9 @@
 import { createAction } from 'redux-actions';
 
-export const addChannels = createAction('CHANNELS_ADD');
-export const addMessages = createAction('MESSAGES_ADD');
-export const setCurrentChannel = createAction('CURRENT_CHANNEL_SET');
+const addChannels = createAction('CHANNELS_ADD');
+const addMessages = createAction('MESSAGES_ADD');
+const setCurrentChannel = createAction('CURRENT_CHANNEL_SET');
+
+const actions = { addChannels, addMessages, setCurrentChannel };
+
+export default actions;

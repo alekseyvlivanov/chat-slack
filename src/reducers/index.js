@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 
-import {
-  addChannels,
-  addMessages,
-  setCurrentChannel,
-} from '../actions/index.js';
+import actions from '../actions/index.js';
 
 const channelsReducer = handleActions(
   {
-    [addChannels]: (state, { payload: { channels } }) => [
+    [actions.addChannels]: (state, { payload: { channels } }) => [
       ...state,
       ...channels,
     ],
@@ -19,7 +15,7 @@ const channelsReducer = handleActions(
 
 const messagesReducer = handleActions(
   {
-    [addMessages]: (state, { payload: { messages } }) => [
+    [actions.addMessages]: (state, { payload: { messages } }) => [
       ...state,
       ...messages,
     ],
@@ -29,7 +25,7 @@ const messagesReducer = handleActions(
 
 const currentChannelIdReducer = handleActions(
   {
-    [setCurrentChannel]: (state, { payload: { currentChannelId } }) =>
+    [actions.setCurrentChannel]: (state, { payload: { currentChannelId } }) =>
       currentChannelId,
   },
   null,
