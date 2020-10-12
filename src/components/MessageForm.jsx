@@ -1,4 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 
@@ -38,11 +41,10 @@ const MessageForm = (props) => {
   });
 
   return (
-    <form noValidate onSubmit={formik.handleSubmit}>
-      <fieldset>
-        <div className="input-group">
-          <input
-            className="form-control"
+    <Form noValidate onSubmit={formik.handleSubmit}>
+      <Form.Group>
+        <InputGroup>
+          <Form.Control
             disabled={formik.isSubmitting}
             name="text"
             placeholder="Enter message"
@@ -50,14 +52,14 @@ const MessageForm = (props) => {
             value={formik.values.text}
             onChange={formik.handleChange}
           />
-          <div className="input-group-append">
-            <button className="btn btn-primary btn-sm" type="submit">
+          <InputGroup.Append>
+            <Button variant="primary" size="sm" type="submit">
               Submit
-            </button>
-          </div>
-        </div>
-      </fieldset>
-    </form>
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </Form.Group>
+    </Form>
   );
 };
 

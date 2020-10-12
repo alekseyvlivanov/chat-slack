@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 
 import Message from './Message';
@@ -19,7 +20,7 @@ const MessagesList = (props) => {
   const username = useContext(UserContext);
 
   return (
-    <div className="col d-flex flex-column h-100">
+    <Col className="d-flex flex-column h-100">
       <div className="d-flex justify-content-center py-2 px-1 border-bottom">
         <span className="h6 m-0">{username}</span>
       </div>
@@ -29,7 +30,7 @@ const MessagesList = (props) => {
         ))}
       </div>
       <MessageForm />
-    </div>
+    </Col>
   );
 };
 

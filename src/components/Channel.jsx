@@ -1,22 +1,24 @@
 import React from 'react';
-import cn from 'classnames';
+import Button from 'react-bootstrap/Button';
+import Nav from 'react-bootstrap/Nav';
 
 const Channel = (props) => {
   const { channel, currentChannelId } = props;
-  const btnClass = cn({
-    'nav-link btn btn-block mb-2 text-left': true,
-    'btn-primary': channel.id === currentChannelId,
-    'btn-light': channel.id !== currentChannelId,
-    active: channel.id === currentChannelId,
-  });
+  const active = channel.id === currentChannelId;
+  const variant = active ? 'primary' : 'light';
   const name = `# ${channel.name}`;
 
   return (
-    <li className="nav-item">
-      <button type="button" className={btnClass}>
+    <Nav.Item>
+      <Button
+        active={active}
+        variant={variant}
+        block
+        className="nav-link mb-2 text-left"
+      >
         {name}
-      </button>
-    </li>
+      </Button>
+    </Nav.Item>
   );
 };
 
