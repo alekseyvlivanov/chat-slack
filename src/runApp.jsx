@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import * as actions from './actions/index.js';
+import { actions } from './slices/index.js';
 import socket from './socket.js';
 import store from './store.js';
 

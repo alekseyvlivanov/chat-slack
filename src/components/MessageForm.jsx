@@ -5,11 +5,11 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 
-import * as actions from '../actions/index.js';
+import { actions } from '../slices/index.js';
 import store from '../store.js';
 import UserContext from '../userContext.js';
 
-const mapStateToProps = ({ currentChannelId }) => {
+const mapStateToProps = ({ channelsInfo: { currentChannelId } }) => {
   return { currentChannelId };
 };
 

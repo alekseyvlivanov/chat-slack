@@ -7,7 +7,10 @@ import MessageForm from './MessageForm';
 
 import UserContext from '../userContext.js';
 
-const mapStateToProps = ({ messages, currentChannelId }) => {
+const mapStateToProps = ({
+  channelsInfo: { currentChannelId },
+  messagesInfo: { messages },
+}) => {
   return {
     messages: messages.filter(
       (message) => message.channelId === currentChannelId,

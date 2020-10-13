@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Channel from './Channel';
 
-const mapStateToProps = ({ channels, currentChannelId }) => {
+const mapStateToProps = ({ channelsInfo: { channels, currentChannelId } }) => {
   return { channels, currentChannelId };
 };
 
