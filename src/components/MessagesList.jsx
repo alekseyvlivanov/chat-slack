@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 
@@ -22,6 +22,12 @@ const MessagesList = (props) => {
   const { messages } = props;
   const username = useContext(UserContext);
 
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <Col className="d-flex flex-column h-100">
       <div className="d-flex justify-content-center py-2 px-1 border-bottom">
@@ -31,6 +37,7 @@ const MessagesList = (props) => {
         {messages.map((message) => (
           <Message key={message.id} message={message} />
         ))}
+        <div ref={ref} />
       </div>
       <MessageForm />
     </Col>
