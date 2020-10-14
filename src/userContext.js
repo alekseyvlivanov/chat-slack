@@ -1,8 +1,8 @@
+import { createContext } from 'react';
 import Cookies from 'js-cookie';
 import faker from 'faker';
-import { createContext } from 'react';
 
-const getUserName = () => {
+export const getUserName = () => {
   const currentUsername = Cookies.get('username');
   if (currentUsername) {
     return currentUsername;

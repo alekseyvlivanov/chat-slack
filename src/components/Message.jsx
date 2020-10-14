@@ -1,15 +1,13 @@
 import React from 'react';
 
 const Message = (props) => {
-  const {
-    message: { username, text },
-  } = props;
+  const { message } = props;
 
   return (
     <div>
-      <span className="font-weight-bolder">{username}</span>
+      <span className="font-weight-bolder">{message.username}</span>
       <span>: </span>
-      <span>{text}</span>
+      <span>{message.text}</span>
     </div>
   );
 };

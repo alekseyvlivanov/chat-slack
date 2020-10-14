@@ -4,9 +4,10 @@ import Nav from 'react-bootstrap/Nav';
 
 const Channel = (props) => {
   const { channel, currentChannelId } = props;
+
   const active = channel.id === currentChannelId;
-  const variant = active ? 'primary' : 'light';
   const name = `# ${channel.name}`;
+  const variant = active ? 'primary' : 'light';
 
   return (
     <Nav.Item>

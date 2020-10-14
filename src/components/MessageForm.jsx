@@ -6,20 +6,23 @@ import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 
 import { actions } from '../slices/index.js';
-import store from '../store.js';
 import UserContext from '../userContext.js';
+
+const mapDispatchToProps = { addMessage: actions.addMessage };
 
 const mapStateToProps = ({ channelsInfo: { currentChannelId } }) => {
   return { currentChannelId };
 };
 
 const MessageForm = (props) => {
-  const { currentChannelId } = props;
+  const { addMessage, currentChannelId } = props;
+
+  const ref = useRef();
   const username = useContext(UserContext);
 
   const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
     if (text.trim() !== '') {
-      store.dispatch(actions.addMessage({ currentChannelId, username, text }));
+      addMessage({ currentChannelId, username, text });
       resetForm();
     }
     setSubmitting(false);
@@ -31,8 +34,6 @@ const MessageForm = (props) => {
     },
     onSubmit: handleSubmit,
   });
-
-  const ref = useRef();
 
   useEffect(() => {
     if (ref.current) {
@@ -63,4 +64,4 @@ const MessageForm = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(MessageForm);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);

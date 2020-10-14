@@ -1,28 +1,31 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 
 import Message from './Message';
 import MessageForm from './MessageForm';
 
 import UserContext from '../userContext.js';
 
-const mapStateToProps = ({
-  channelsInfo: { currentChannelId },
-  messagesInfo: { messages },
-}) => {
-  return {
-    messages: messages.filter(
-      (message) => message.channelId === currentChannelId,
-    ),
-  };
-};
+const selectCurrentChannelId = ({ channelsInfo: { currentChannelId } }) =>
+  currentChannelId;
+const selectMessages = ({ messagesInfo: { messages } }) => messages;
+const selectFilteredMessages = createSelector(
+  [selectCurrentChannelId, selectMessages],
+  (currentChannelId, messages) =>
+    messages.filter((message) => message.channelId === currentChannelId),
+);
+
+const mapStateToProps = (state) => ({
+  messages: selectFilteredMessages(state),
+});
 
 const MessagesList = (props) => {
   const { messages } = props;
-  const username = useContext(UserContext);
 
   const ref = useRef();
+  const username = useContext(UserContext);
 
   useEffect(() => {
     ref.current.scrollIntoView({ behavior: 'smooth' });
