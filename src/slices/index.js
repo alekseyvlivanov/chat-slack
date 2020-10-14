@@ -3,16 +3,16 @@ import { combineReducers } from 'redux';
 import channelsReducer, { addChannels, setCurrentChannel } from './channels.js';
 import messagesReducer, {
   addMessages,
-  addMessageSuccess,
   addMessage,
+  addMessageAsync,
 } from './messages.js';
 
 export const actions = {
   addChannels,
   setCurrentChannel,
   addMessages,
-  addMessageSuccess,
   addMessage,
+  addMessageAsync,
 };
 
 export const reducer = combineReducers({

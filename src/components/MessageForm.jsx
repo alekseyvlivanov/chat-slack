@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import { actions } from '../slices/index.js';
 import UserContext from '../userContext.js';
 
-const { addMessage } = actions;
+const { addMessageAsync } = actions;
 
 const MessageForm = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const MessageForm = () => {
 
   const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
     if (text.trim() !== '') {
-      dispatch(addMessage({ currentChannelId, username, text }));
+      dispatch(addMessageAsync({ currentChannelId, username, text }));
       resetForm();
     }
     setSubmitting(false);
