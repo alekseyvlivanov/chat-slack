@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Col from 'react-bootstrap/Col';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
 import Message from './Message';
@@ -17,12 +17,8 @@ const selectFilteredMessages = createSelector(
     messages.filter((message) => message.channelId === currentChannelId),
 );
 
-const mapStateToProps = (state) => ({
-  messages: selectFilteredMessages(state),
-});
-
-const MessagesList = (props) => {
-  const { messages } = props;
+const MessagesList = () => {
+  const messages = useSelector((state) => selectFilteredMessages(state));
 
   const ref = useRef();
   const username = useContext(UserContext);
@@ -47,4 +43,4 @@ const MessagesList = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(MessagesList);
+export default MessagesList;

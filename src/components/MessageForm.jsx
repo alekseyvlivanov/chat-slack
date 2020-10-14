@@ -2,27 +2,24 @@ import React, { useContext, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
 import { actions } from '../slices/index.js';
 import UserContext from '../userContext.js';
 
-const mapDispatchToProps = { addMessage: actions.addMessage };
+const { addMessage } = actions;
 
-const mapStateToProps = ({ channelsInfo: { currentChannelId } }) => {
-  return { currentChannelId };
-};
-
-const MessageForm = (props) => {
-  const { addMessage, currentChannelId } = props;
+const MessageForm = () => {
+  const dispatch = useDispatch();
+  const { currentChannelId } = useSelector((state) => state.channelsInfo);
 
   const ref = useRef();
   const username = useContext(UserContext);
 
   const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
     if (text.trim() !== '') {
-      addMessage({ currentChannelId, username, text });
+      dispatch(addMessage({ currentChannelId, username, text }));
       resetForm();
     }
     setSubmitting(false);
@@ -64,4 +61,4 @@ const MessageForm = (props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);
+export default MessageForm;

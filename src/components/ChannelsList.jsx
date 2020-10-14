@@ -2,16 +2,14 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Channel from './Channel';
 
-const mapStateToProps = ({ channelsInfo: { channels, currentChannelId } }) => {
-  return { channels, currentChannelId };
-};
-
-const ChannelsList = (props) => {
-  const { channels, currentChannelId } = props;
+const ChannelsList = () => {
+  const { channels, currentChannelId } = useSelector(
+    (state) => state.channelsInfo,
+  );
 
   return (
     <Col xs="3" className="d-flex flex-column h-100 border-right">
@@ -34,4 +32,4 @@ const ChannelsList = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(ChannelsList);
+export default ChannelsList;
