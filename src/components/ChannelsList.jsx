@@ -2,14 +2,23 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { actions } from '../slices/index.js';
 
 import Channel from './Channel';
 
+const { setCurrentChannel } = actions;
+
 const ChannelsList = () => {
+  const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(
     (state) => state.channelsInfo,
   );
+
+  const handleSetCurrentChannel = (channelId) => () => {
+    dispatch(setCurrentChannel({ currentChannelId: channelId }));
+  };
 
   return (
     <Col xs="3" className="d-flex flex-column h-100 border-right">
@@ -25,6 +34,7 @@ const ChannelsList = () => {
             key={channel.id}
             channel={channel}
             currentChannelId={currentChannelId}
+            handleSetCurrentChannel={handleSetCurrentChannel}
           />
         ))}
       </Nav>

@@ -25,8 +25,8 @@ const runApp = ({ channels, messages, currentChannelId }) => {
     console.log('renameChannel', attributes);
   });
 
-  socket.on('newMessage', ({ data }) => {
-    store.dispatch(actions.addMessage({ message: { ...data.attributes } }));
+  socket.on('newMessage', ({ data: { attributes } }) => {
+    store.dispatch(actions.addMessage({ message: { ...attributes } }));
   });
 
   render(
