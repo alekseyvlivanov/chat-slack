@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
 
-import channelsReducer, { addChannels, setCurrentChannel } from './channels.js';
+import channelsReducer, {
+  addChannels,
+  addChannel,
+  setCurrentChannel,
+  addChannelAsync,
+} from './channels.js';
 import messagesReducer, {
   addMessages,
   addMessage,
@@ -9,7 +14,9 @@ import messagesReducer, {
 
 export const actions = {
   addChannels,
+  addChannel,
   setCurrentChannel,
+  addChannelAsync,
   addMessages,
   addMessage,
   addMessageAsync,
