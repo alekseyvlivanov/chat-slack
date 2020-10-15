@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import routes from '../routes.js';
 
+import { removeChannel } from './channels.js';
+
 const messagesSlice = createSlice({
   name: 'messagesInfo',
   initialState: { messages: [] },
@@ -13,6 +15,13 @@ const messagesSlice = createSlice({
     },
     addMessage(state, { payload: { message } }) {
       state.messages.push(message);
+    },
+  },
+  extraReducers: {
+    [removeChannel]: (state, { payload: { id } }) => {
+      state.messages = state.messages.filter(
+        (message) => message.channelId !== id,
+      );
     },
   },
 });

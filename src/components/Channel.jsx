@@ -5,7 +5,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 
 const Channel = (props) => {
-  const { channel, currentChannelId, handleSetCurrentChannel } = props;
+  const {
+    channel,
+    currentChannelId,
+    handleSetCurrentChannel,
+    handleShowRemove,
+  } = props;
 
   const name = `# ${channel.name}`;
   const variant = channel.id === currentChannelId ? 'primary' : 'light';
@@ -24,7 +29,9 @@ const Channel = (props) => {
           </Button>
           <Dropdown.Toggle className="mb-2" split variant={variant} />
           <Dropdown.Menu>
-            <Dropdown.Item as="button">Remove</Dropdown.Item>
+            <Dropdown.Item as="button" onClick={handleShowRemove(channel)}>
+              Remove
+            </Dropdown.Item>
             <Dropdown.Item as="button">Rename</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

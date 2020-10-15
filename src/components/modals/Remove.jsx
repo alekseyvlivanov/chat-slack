@@ -3,32 +3,28 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-const generateOnSubmit = ({ modalInfo, setItems, onHide }) => (e) => {
-  e.preventDefault();
-  setItems((items) => items.filter((i) => i.id !== modalInfo.item.id));
-  onHide();
-};
-
 const Remove = (props) => {
-  const { onHide } = props;
-  const onSubmit = generateOnSubmit(props);
+  const { data, show, handleHide, handleSubmit } = props;
 
   return (
-    <Modal.Dialog>
-      <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Remove channel</Modal.Title>
-      </Modal.Header>
+    <Modal show={show} onHide={handleHide}>
+      <Form noValidate onSubmit={handleSubmit(data.id)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Remove channel</Modal.Title>
+        </Modal.Header>
 
-      <Modal.Body>
-        <Form noValidate onSubmit={onSubmit}>
-          <Form.Group>
-            <Button variant="danger" type="submit">
-              Remove
-            </Button>
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-    </Modal.Dialog>
+        <Modal.Body>{data.name}</Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleHide}>
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 

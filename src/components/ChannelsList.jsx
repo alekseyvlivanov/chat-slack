@@ -9,7 +9,12 @@ import { actions } from '../slices/index.js';
 import Channel from './Channel';
 import getModal from './modals/index.js';
 
-const { addChannelAsync, setCurrentChannel } = actions;
+const {
+  addChannelAsync,
+  removeChannelAsync,
+  // renameChannelAsync,
+  setCurrentChannel,
+} = actions;
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
@@ -18,11 +23,12 @@ const ChannelsList = () => {
   );
 
   const Add = getModal('adding');
-  // const Remove = getModal('removing');
+  const Remove = getModal('removing');
   // const Rename = getModal('renaming');
 
+  const [data, setData] = useState({});
   const [showAdd, setShowAdd] = useState(false);
-  // const [showRemove, setShowRemove] = useState(false);
+  const [showRemove, setShowRemove] = useState(false);
   // const [showRename, setShowRename] = useState(false);
 
   const handleShowAdd = () => {
@@ -36,6 +42,23 @@ const ChannelsList = () => {
   const handleSubmitAdd = ({ name }) => {
     dispatch(addChannelAsync({ name }));
     setShowAdd(false);
+  };
+
+  const handleShowRemove = (channel) => () => {
+    setData(channel);
+    setShowRemove(true);
+  };
+
+  const handleCloseRemove = () => {
+    setShowRemove(false);
+    setData({});
+  };
+
+  const handleSubmitRemove = (id) => (e) => {
+    e.preventDefault();
+    dispatch(removeChannelAsync({ id }));
+    setShowRemove(false);
+    setData({});
   };
 
   const handleSetCurrentChannel = (channelId) => () => {
@@ -63,6 +86,7 @@ const ChannelsList = () => {
               channel={channel}
               currentChannelId={currentChannelId}
               handleSetCurrentChannel={handleSetCurrentChannel}
+              handleShowRemove={handleShowRemove}
             />
           ))}
         </Nav>
@@ -72,12 +96,13 @@ const ChannelsList = () => {
         handleHide={handleCloseAdd}
         handleSubmit={handleSubmitAdd}
       />
-      {/* <Remove
+      <Remove
+        data={data}
         show={showRemove}
         handleHide={handleCloseRemove}
         handleSubmit={handleSubmitRemove}
       />
-      <Rename
+      {/* <Rename
         show={showRename}
         handleHide={handleCloseRename}
         handleSubmit={handleSubmitRename}

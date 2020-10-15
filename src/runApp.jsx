@@ -17,8 +17,8 @@ const runApp = ({ channels, messages, currentChannelId }) => {
     store.dispatch(actions.addChannel({ channel: { ...attributes } }));
   });
 
-  socket.on('removeChannel', ({ data: { attributes } }) => {
-    console.log('removeChannel', attributes);
+  socket.on('removeChannel', ({ data: { id } }) => {
+    store.dispatch(actions.removeChannel({ id }));
   });
 
   socket.on('renameChannel', ({ data: { attributes } }) => {

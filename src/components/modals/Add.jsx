@@ -41,6 +41,7 @@ export default (props) => {
             onChange={formik.handleChange}
           />
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHide}>
             Cancel
