@@ -1,6 +1,6 @@
 import React from 'react';
-import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 
@@ -10,6 +10,7 @@ const Channel = (props) => {
     currentChannelId,
     handleSetCurrentChannel,
     handleShowRemove,
+    handleShowRename,
   } = props;
 
   const name = `# ${channel.name}`;
@@ -32,7 +33,9 @@ const Channel = (props) => {
             <Dropdown.Item as="button" onClick={handleShowRemove(channel)}>
               Remove
             </Dropdown.Item>
-            <Dropdown.Item as="button">Rename</Dropdown.Item>
+            <Dropdown.Item as="button" onClick={handleShowRename(channel)}>
+              Rename
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Nav.Item>

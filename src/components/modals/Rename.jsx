@@ -4,50 +4,56 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 
-const generateOnSubmit = ({ modalInfo, setItems, onHide }) => (values) => {
-  setItems((items) => {
-    const item = items.find((i) => i.id === modalInfo.item.id);
-    item.name = values.name;
-  });
-  onHide();
-};
-
-export default (props) => {
-  const { onHide, modalInfo } = props;
-  const { item } = modalInfo;
+const Rename = (props) => {
+  const { data, show, handleHide, handleSubmit } = props;
 
   const formik = useFormik({
-    onSubmit: generateOnSubmit(props),
-    initialValues: item,
+    enableReinitialize: true,
+    initialValues: { name: data.name || '' },
+    onSubmit: ({ name }, { resetForm }) => {
+      if (name.trim() !== '') {
+        handleSubmit({ id: data.id, name });
+        resetForm();
+      }
+    },
   });
 
   const ref = useRef();
+
   useEffect(() => {
-    ref.current.select();
+    if (ref.current) {
+      ref.current.focus();
+    }
   });
 
   return (
-    <Modal.Dialog>
-      <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Rename channel</Modal.Title>
-      </Modal.Header>
+    <Modal show={show} onHide={handleHide}>
+      <Form noValidate onSubmit={formik.handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rename channel</Modal.Title>
+        </Modal.Header>
 
-      <Modal.Body>
-        <Form noValidate onSubmit={formik.handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              required
-              ref={ref}
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              name="name"
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Rename
+        <Modal.Body>
+          <Form.Control
+            name="name"
+            placeholder="Enter channel name"
+            ref={ref}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+          />
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleHide}>
+            Cancel
           </Button>
-        </Form>
-      </Modal.Body>
-    </Modal.Dialog>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
+
+export default Rename;

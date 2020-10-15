@@ -52,8 +52,8 @@ export const removeChannelAsync = ({ id }) => async () => {
 
 export const renameChannelAsync = ({ id, name }) => async () => {
   try {
-    const url = routes.channelsPath();
-    const data = { attributes: { id, name } };
+    const url = routes.channelPath(id);
+    const data = { attributes: { name } };
     await axios.patch(url, { data });
   } catch (err) {
     console.log(err);

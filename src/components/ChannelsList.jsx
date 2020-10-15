@@ -12,7 +12,7 @@ import getModal from './modals/index.js';
 const {
   addChannelAsync,
   removeChannelAsync,
-  // renameChannelAsync,
+  renameChannelAsync,
   setCurrentChannel,
 } = actions;
 
@@ -24,12 +24,12 @@ const ChannelsList = () => {
 
   const Add = getModal('adding');
   const Remove = getModal('removing');
-  // const Rename = getModal('renaming');
+  const Rename = getModal('renaming');
 
   const [data, setData] = useState({});
   const [showAdd, setShowAdd] = useState(false);
   const [showRemove, setShowRemove] = useState(false);
-  // const [showRename, setShowRename] = useState(false);
+  const [showRename, setShowRename] = useState(false);
 
   const handleShowAdd = () => {
     setShowAdd(true);
@@ -61,6 +61,22 @@ const ChannelsList = () => {
     setData({});
   };
 
+  const handleShowRename = (channel) => () => {
+    setData(channel);
+    setShowRename(true);
+  };
+
+  const handleCloseRename = () => {
+    setShowRename(false);
+    setData({});
+  };
+
+  const handleSubmitRename = ({ id, name }) => {
+    dispatch(renameChannelAsync({ id, name }));
+    setShowRename(false);
+    setData({});
+  };
+
   const handleSetCurrentChannel = (channelId) => () => {
     dispatch(setCurrentChannel({ currentChannelId: channelId }));
   };
@@ -87,6 +103,7 @@ const ChannelsList = () => {
               currentChannelId={currentChannelId}
               handleSetCurrentChannel={handleSetCurrentChannel}
               handleShowRemove={handleShowRemove}
+              handleShowRename={handleShowRename}
             />
           ))}
         </Nav>
@@ -102,11 +119,12 @@ const ChannelsList = () => {
         handleHide={handleCloseRemove}
         handleSubmit={handleSubmitRemove}
       />
-      {/* <Rename
+      <Rename
+        data={data}
         show={showRename}
         handleHide={handleCloseRename}
         handleSubmit={handleSubmitRename}
-      /> */}
+      />
     </>
   );
 };

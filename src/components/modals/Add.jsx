@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 
-export default (props) => {
+const Add = (props) => {
   const { show, handleHide, handleSubmit } = props;
 
   const formik = useFormik({
@@ -54,3 +54,5 @@ export default (props) => {
     </Modal>
   );
 };
+
+export default Add;

@@ -22,7 +22,7 @@ const runApp = ({ channels, messages, currentChannelId }) => {
   });
 
   socket.on('renameChannel', ({ data: { attributes } }) => {
-    console.log('renameChannel', attributes);
+    store.dispatch(actions.renameChannel({ ...attributes }));
   });
 
   socket.on('newMessage', ({ data: { attributes } }) => {
