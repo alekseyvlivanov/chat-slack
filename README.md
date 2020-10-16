@@ -1,4 +1,5 @@
 [![Github Actions Status](https://github.com/alekseyvlivanov/frontend-project-lvl4/workflows/Node%20CI/badge.svg)](https://github.com/alekseyvlivanov/frontend-project-lvl4/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6db02351074e2fe3a478/maintainability)](https://codeclimate.com/github/alekseyvlivanov/frontend-project-lvl4/maintainability)
 
 ## Requirements
 
