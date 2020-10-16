@@ -4,17 +4,18 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { actions } from '../slices/index.js';
+import { actions, asyncActions } from '../slices/index.js';
 
 import Channel from './Channel';
 import getModal from './modals/index.js';
+
+const { setCurrentChannel } = actions;
 
 const {
   addChannelAsync,
   removeChannelAsync,
   renameChannelAsync,
-  setCurrentChannel,
-} = actions;
+} = asyncActions;
 
 const ChannelsList = () => {
   const dispatch = useDispatch();

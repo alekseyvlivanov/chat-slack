@@ -31,7 +31,7 @@ const channelsSlice = createSlice({
   },
 });
 
-export const addChannelAsync = ({ name }) => async () => {
+const addChannelAsync = ({ name }) => async () => {
   try {
     const url = routes.channelsPath();
     const data = { attributes: { name } };
@@ -41,7 +41,7 @@ export const addChannelAsync = ({ name }) => async () => {
   }
 };
 
-export const removeChannelAsync = ({ id }) => async () => {
+const removeChannelAsync = ({ id }) => async () => {
   try {
     const url = routes.channelPath(id);
     await axios.delete(url);
@@ -50,7 +50,7 @@ export const removeChannelAsync = ({ id }) => async () => {
   }
 };
 
-export const renameChannelAsync = ({ id, name }) => async () => {
+const renameChannelAsync = ({ id, name }) => async () => {
   try {
     const url = routes.channelPath(id);
     const data = { attributes: { name } };
@@ -60,12 +60,6 @@ export const renameChannelAsync = ({ id, name }) => async () => {
   }
 };
 
-export const {
-  addChannels,
-  addChannel,
-  removeChannel,
-  renameChannel,
-  setCurrentChannel,
-} = channelsSlice.actions;
-
+export { addChannelAsync, removeChannelAsync, renameChannelAsync };
+export const { actions } = channelsSlice;
 export default channelsSlice.reducer;

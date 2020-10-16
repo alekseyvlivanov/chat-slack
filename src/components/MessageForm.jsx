@@ -5,10 +5,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { actions } from '../slices/index.js';
+import { asyncActions } from '../slices/index.js';
 import UserContext from '../userContext.js';
 
-const { addMessageAsync } = actions;
+const { addMessageAsync } = asyncActions;
 
 const MessageForm = () => {
   const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import store from './store.js';
 
 import App from './components/App';
 
-const runApp = ({ channels, messages, currentChannelId }) => {
+const run = ({ channels, messages, currentChannelId }) => {
   store.dispatch(actions.addChannels({ channels }));
   store.dispatch(actions.addMessages({ messages }));
   store.dispatch(actions.setCurrentChannel({ currentChannelId }));
@@ -37,4 +37,4 @@ const runApp = ({ channels, messages, currentChannelId }) => {
   );
 };
 
-export default runApp;
+export default run;

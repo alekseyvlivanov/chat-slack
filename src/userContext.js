@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import Cookies from 'js-cookie';
 import faker from 'faker';
 
-export const getUserName = () => {
+const getUserName = () => {
   const currentUsername = Cookies.get('username');
   if (currentUsername) {
     return currentUsername;
@@ -15,4 +15,5 @@ export const getUserName = () => {
 
 const UserContext = createContext(getUserName());
 
+export { getUserName };
 export default UserContext;
