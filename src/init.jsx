@@ -1,17 +1,23 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import io from 'socket.io-client';
 
-import { actions } from './slices/index.js';
-import socket from './socket.js';
-import store from './store.js';
+import reducer, { actions } from './slices/index.js';
+import UserContext from './userContext.js';
+import getUserName from './utils.js';
 
 import App from './components/App';
 
 const run = ({ channels, messages, currentChannelId }) => {
+  const store = configureStore({ reducer });
+
   store.dispatch(actions.addChannels({ channels }));
   store.dispatch(actions.addMessages({ messages }));
   store.dispatch(actions.setCurrentChannel({ currentChannelId }));
+
+  const socket = io({ transports: ['websocket'] });
 
   socket.on('newChannel', ({ data: { attributes } }) => {
     store.dispatch(actions.addChannel({ channel: { ...attributes } }));
@@ -29,9 +35,11 @@ const run = ({ channels, messages, currentChannelId }) => {
     store.dispatch(actions.addMessage({ message: { ...attributes } }));
   });
 
-  render(
+  ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <UserContext.Provider value={getUserName()}>
+        <App />
+      </UserContext.Provider>
     </Provider>,
     document.querySelector('#chat'),
   );
