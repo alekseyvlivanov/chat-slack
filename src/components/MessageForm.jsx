@@ -18,17 +18,26 @@ const MessageForm = () => {
   const username = useContext(UserContext);
 
   const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
-    if (text.trim() !== '') {
-      dispatch(addMessageAsync({ currentChannelId, username, text }));
-      resetForm();
-    }
+    dispatch(addMessageAsync({ currentChannelId, username, text }));
+    resetForm();
     setSubmitting(false);
+  };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (values.text.trim() === '') {
+      errors.text = 'There is no point in empty messages';
+    }
+
+    return errors;
   };
 
   const formik = useFormik({
     initialValues: {
       text: '',
     },
+    validate,
     onSubmit: handleSubmit,
   });
 
