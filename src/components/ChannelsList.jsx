@@ -25,6 +25,11 @@ const ChannelsList = () => {
   const hideModal = () => setModalInfo({ type: null, data: null });
   const showModal = (type, data) => setModalInfo({ type, data });
 
+  const handleShowAdd = () => showModal('adding', channels);
+  const handleShowRemove = (channel) => () => showModal('removing', channel);
+  const handleShowRename = (channel) => () =>
+    showModal('renaming', { channels, channel });
+
   return (
     <>
       <Col
@@ -37,7 +42,7 @@ const ChannelsList = () => {
             variant
             size="sm"
             className="ml-auto my-0 p-0"
-            onClick={() => showModal('adding', channels)}
+            onClick={handleShowAdd}
           >
             <span className="h6 m-0 p-0">+</span>
           </Button>
@@ -48,10 +53,8 @@ const ChannelsList = () => {
               key={channel.id}
               channel={channel}
               currentChannelId={currentChannelId}
-              handleShowRemove={() => showModal('removing', channel)}
-              handleShowRename={() =>
-                showModal('renaming', { channels, channel })
-              }
+              handleShowRemove={handleShowRemove(channel)}
+              handleShowRename={handleShowRename(channel)}
             />
           ))}
         </Nav>
