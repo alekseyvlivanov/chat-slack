@@ -1,8 +1,34 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import routes from '../routes.js';
+
+const addChannelAsync = createAsyncThunk(
+  'channelsInfo/addChannelAsync',
+  async ({ name }) => {
+    const url = routes.channelsPath();
+    const data = { attributes: { name } };
+    await axios.post(url, { data });
+  },
+);
+
+const removeChannelAsync = createAsyncThunk(
+  'channelsInfo/removeChannelAsync',
+  async ({ id }) => {
+    const url = routes.channelPath(id);
+    await axios.delete(url);
+  },
+);
+
+const renameChannelAsync = createAsyncThunk(
+  'channelsInfo/renameChannelAsync',
+  async ({ id, name }) => {
+    const url = routes.channelPath(id);
+    const data = { attributes: { name } };
+    await axios.patch(url, { data });
+  },
+);
 
 const channelsSlice = createSlice({
   name: 'channelsInfo',
@@ -29,36 +55,18 @@ const channelsSlice = createSlice({
       state.currentChannelId = currentChannelId;
     },
   },
+  extraReducers: {
+    [addChannelAsync.rejected]: () => {
+      throw new Error("Can't add channel, try again later");
+    },
+    [removeChannelAsync.rejected]: () => {
+      throw new Error("Can't remove channel, try again later");
+    },
+    [renameChannelAsync.rejected]: () => {
+      throw new Error("Can't rename channel, try again later");
+    },
+  },
 });
-
-const addChannelAsync = ({ name }) => async () => {
-  try {
-    const url = routes.channelsPath();
-    const data = { attributes: { name } };
-    await axios.post(url, { data });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const removeChannelAsync = ({ id }) => async () => {
-  try {
-    const url = routes.channelPath(id);
-    await axios.delete(url);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const renameChannelAsync = ({ id, name }) => async () => {
-  try {
-    const url = routes.channelPath(id);
-    const data = { attributes: { name } };
-    await axios.patch(url, { data });
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 export { addChannelAsync, removeChannelAsync, renameChannelAsync };
 export const { actions } = channelsSlice;

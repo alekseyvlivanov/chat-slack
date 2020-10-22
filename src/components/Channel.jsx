@@ -3,15 +3,25 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
+import { useDispatch } from 'react-redux';
+
+import { actions } from '../slices/index.js';
+
+const { setCurrentChannel } = actions;
 
 const Channel = (props) => {
   const {
     channel,
     currentChannelId,
-    handleSetCurrentChannel,
     handleShowRemove,
     handleShowRename,
   } = props;
+
+  const dispatch = useDispatch();
+
+  const handleSetCurrentChannel = () => {
+    dispatch(setCurrentChannel({ currentChannelId: channel.id }));
+  };
 
   const name = `# ${channel.name}`;
   const variant = channel.id === currentChannelId ? 'primary' : 'light';
@@ -22,18 +32,18 @@ const Channel = (props) => {
         <Dropdown as={ButtonGroup} className="d-flex">
           <Button
             block
-            className="flex-grow-1 mb-2 nav-link text-left"
+            className="text-break flex-grow-1 mb-2 nav-link text-left"
             variant={variant}
-            onClick={handleSetCurrentChannel(channel.id)}
+            onClick={handleSetCurrentChannel}
           >
             {name}
           </Button>
           <Dropdown.Toggle className="mb-2" split variant={variant} />
           <Dropdown.Menu>
-            <Dropdown.Item as="button" onClick={handleShowRemove(channel)}>
+            <Dropdown.Item as="button" onClick={handleShowRemove}>
               Remove
             </Dropdown.Item>
-            <Dropdown.Item as="button" onClick={handleShowRename(channel)}>
+            <Dropdown.Item as="button" onClick={handleShowRename}>
               Rename
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -48,7 +58,7 @@ const Channel = (props) => {
         block
         className="nav-link mb-2 text-left"
         variant={variant}
-        onClick={handleSetCurrentChannel(channel.id)}
+        onClick={handleSetCurrentChannel}
       >
         {name}
       </Button>

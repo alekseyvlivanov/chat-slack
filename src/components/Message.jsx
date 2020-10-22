@@ -7,7 +7,7 @@ const Message = (props) => {
     <div>
       <span className="font-weight-bolder">{message.username}</span>
       <span>: </span>
-      <span>{message.text}</span>
+      <span className="text-break">{message.text}</span>
     </div>
   );
 };

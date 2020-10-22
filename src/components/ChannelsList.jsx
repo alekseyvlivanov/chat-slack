@@ -2,130 +2,61 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { actions, asyncActions } from '../slices/index.js';
+import { useSelector } from 'react-redux';
 
 import Channel from './Channel';
 import getModal from './modals/index.js';
 
-const { setCurrentChannel } = actions;
+const renderModal = ({ modalInfo, hideModal }) => {
+  if (!modalInfo.type) {
+    return null;
+  }
 
-const {
-  addChannelAsync,
-  removeChannelAsync,
-  renameChannelAsync,
-} = asyncActions;
+  const Component = getModal(modalInfo.type);
+  return <Component modalInfo={modalInfo} onHide={hideModal} />;
+};
 
 const ChannelsList = () => {
-  const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector(
     (state) => state.channelsInfo,
   );
 
-  const Add = getModal('adding');
-  const Remove = getModal('removing');
-  const Rename = getModal('renaming');
-
-  const [data, setData] = useState({});
-  const [showAdd, setShowAdd] = useState(false);
-  const [showRemove, setShowRemove] = useState(false);
-  const [showRename, setShowRename] = useState(false);
-
-  const handleShowAdd = () => {
-    setShowAdd(true);
-  };
-
-  const handleCloseAdd = () => {
-    setShowAdd(false);
-  };
-
-  const handleSubmitAdd = ({ name }) => {
-    dispatch(addChannelAsync({ name }));
-    setShowAdd(false);
-  };
-
-  const handleShowRemove = (channel) => () => {
-    setData(channel);
-    setShowRemove(true);
-  };
-
-  const handleCloseRemove = () => {
-    setShowRemove(false);
-    setData({});
-  };
-
-  const handleSubmitRemove = (id) => (e) => {
-    e.preventDefault();
-    dispatch(removeChannelAsync({ id }));
-    setShowRemove(false);
-    setData({});
-  };
-
-  const handleShowRename = (channel) => () => {
-    setData(channel);
-    setShowRename(true);
-  };
-
-  const handleCloseRename = () => {
-    setShowRename(false);
-    setData({});
-  };
-
-  const handleSubmitRename = ({ id, name }) => {
-    dispatch(renameChannelAsync({ id, name }));
-    setShowRename(false);
-    setData({});
-  };
-
-  const handleSetCurrentChannel = (channelId) => () => {
-    dispatch(setCurrentChannel({ currentChannelId: channelId }));
-  };
+  const [modalInfo, setModalInfo] = useState({ type: null, data: null });
+  const hideModal = () => setModalInfo({ type: null, data: null });
+  const showModal = (type, data) => setModalInfo({ type, data });
 
   return (
     <>
-      <Col xs="3" className="d-flex flex-column h-100 border-right">
+      <Col
+        xs="3"
+        className="d-flex flex-column h-100 border-right overflow-auto"
+      >
         <div className="d-flex pt-2 pb-1 px-1">
           <span className="h6 m-0">Channels</span>
           <Button
             variant
             size="sm"
             className="ml-auto my-0 p-0"
-            onClick={handleShowAdd}
+            onClick={() => showModal('adding', channels)}
           >
             <span className="h6 m-0 p-0">+</span>
           </Button>
         </div>
-        <Nav variant="pills" className="mt-1 d-flex flex-column">
+        <Nav variant="pills" className="mt-1 mb-3 d-flex flex-column">
           {channels.map((channel) => (
             <Channel
               key={channel.id}
               channel={channel}
               currentChannelId={currentChannelId}
-              handleSetCurrentChannel={handleSetCurrentChannel}
-              handleShowRemove={handleShowRemove}
-              handleShowRename={handleShowRename}
+              handleShowRemove={() => showModal('removing', channel)}
+              handleShowRename={() =>
+                showModal('renaming', { channels, channel })
+              }
             />
           ))}
         </Nav>
       </Col>
-      <Add
-        show={showAdd}
-        handleHide={handleCloseAdd}
-        handleSubmit={handleSubmitAdd}
-      />
-      <Remove
-        data={data}
-        show={showRemove}
-        handleHide={handleCloseRemove}
-        handleSubmit={handleSubmitRemove}
-      />
-      <Rename
-        data={data}
-        show={showRename}
-        handleHide={handleCloseRename}
-        handleSubmit={handleSubmitRename}
-      />
+      {renderModal({ modalInfo, hideModal })}
     </>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useContext, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -12,31 +13,34 @@ const { addMessageAsync } = asyncActions;
 
 const MessageForm = () => {
   const dispatch = useDispatch();
-  const { currentChannelId } = useSelector((state) => state.channelsInfo);
-
   const ref = useRef();
+
+  const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const username = useContext(UserContext);
 
-  const handleSubmit = ({ text }, { resetForm, setSubmitting }) => {
-    dispatch(addMessageAsync({ currentChannelId, username, text }));
-    resetForm();
-    setSubmitting(false);
+  const handleSubmit = async (
+    { text },
+    { resetForm, setStatus, setSubmitting },
+  ) => {
+    try {
+      await dispatch(addMessageAsync({ currentChannelId, username, text }));
+      resetForm();
+      setSubmitting(false);
+    } catch (err) {
+      setStatus(err.message);
+    }
   };
 
   const validate = (values) => {
     const errors = {};
-
     if (values.text.trim() === '') {
-      errors.text = 'There is no point in empty messages';
+      errors.text = 'Nobody loves empty messages';
     }
-
     return errors;
   };
 
   const formik = useFormik({
-    initialValues: {
-      text: '',
-    },
+    initialValues: { text: '' },
     validate,
     onSubmit: handleSubmit,
   });
@@ -49,23 +53,29 @@ const MessageForm = () => {
 
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
-      <Form.Group>
-        <InputGroup>
-          <Form.Control
-            disabled={formik.isSubmitting}
-            name="text"
-            placeholder="Enter message"
-            ref={ref}
-            value={formik.values.text}
-            onChange={formik.handleChange}
-          />
-          <InputGroup.Append>
-            <Button variant="primary" size="sm" type="submit">
-              Submit
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </Form.Group>
+      <fieldset disabled={formik.isSubmitting}>
+        <Form.Group>
+          <InputGroup>
+            <Form.Control
+              isInvalid={!!formik.errors.text}
+              name="text"
+              placeholder="Enter message"
+              ref={ref}
+              value={formik.values.text}
+              onChange={formik.handleChange}
+            />
+            <InputGroup.Append>
+              <Button variant="primary" size="sm" type="submit">
+                Submit
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+          <Form.Control.Feedback type="invalid" className="d-block">
+            {formik.status ? formik.status : formik.errors.text}
+            &nbsp;
+          </Form.Control.Feedback>
+        </Form.Group>
+      </fieldset>
     </Form>
   );
 };
