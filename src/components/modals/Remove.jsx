@@ -25,7 +25,6 @@ const Remove = (props) => {
   };
 
   const formik = useFormik({
-    enableReinitialize: true,
     initialValues: { name: modalInfo.data.name || '' },
     onSubmit: handleSubmit,
   });

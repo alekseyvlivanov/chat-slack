@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { object, string } from 'yup';
 
 import { asyncActions } from '../slices/index.js';
 import UserContext from '../userContext.js';
@@ -31,17 +32,13 @@ const MessageForm = () => {
     }
   };
 
-  const validate = (values) => {
-    const errors = {};
-    if (values.text.trim() === '') {
-      errors.text = 'Nobody loves empty messages';
-    }
-    return errors;
-  };
+  const validationSchema = object().shape({
+    text: string().trim().required('Nobody loves empty messages'),
+  });
 
   const formik = useFormik({
     initialValues: { text: '' },
-    validate,
+    validationSchema,
     onSubmit: handleSubmit,
   });
 

@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { object, string } from 'yup';
 
 import { asyncActions } from '../../slices/index.js';
 
@@ -19,7 +20,10 @@ const Rename = (props) => {
   const handleSubmit = async ({ name }, { setStatus }) => {
     try {
       await dispatch(
-        renameChannelAsync({ id: modalInfo.data.channel.id, name }),
+        renameChannelAsync({
+          id: modalInfo.data.channel.id,
+          name: name.trim(),
+        }),
       );
       onHide();
     } catch (err) {
@@ -27,21 +31,18 @@ const Rename = (props) => {
     }
   };
 
-  const validate = (values) => {
-    const errors = {};
-    const name = values.name.trim();
-    if (name.length < 3 || name.length > 20) {
-      errors.name = 'Must be 3 to 20 characters';
-    } else if (channelNames.find((n) => n === name)) {
-      errors.name = 'Must be unique';
-    }
-    return errors;
-  };
+  const validationSchema = object().shape({
+    name: string()
+      .trim()
+      .min(3, 'Must be 3 to 20 characters')
+      .max(20, 'Must be 3 to 20 characters')
+      .required('Name is required')
+      .notOneOf(channelNames, 'Must be unique'),
+  });
 
   const formik = useFormik({
-    enableReinitialize: true,
     initialValues: { name: modalInfo.data.channel.name || '' },
-    validate,
+    validationSchema,
     onSubmit: handleSubmit,
   });
 
