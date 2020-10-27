@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 import reducer, { actions } from './slices/index.js';
 import UserContext from './userContext.js';
-import getUserName from './utils.js';
+import setFakeUserName from './utils.js';
 
 import App from './components/App';
 
@@ -37,7 +37,7 @@ const run = ({ channels, messages, currentChannelId }) => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <UserContext.Provider value={getUserName()}>
+      <UserContext.Provider value={setFakeUserName()}>
         <App />
       </UserContext.Provider>
     </Provider>,
