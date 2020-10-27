@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -13,6 +14,8 @@ import UserContext from '../userContext.js';
 const { addMessageAsync } = asyncActions;
 
 const MessageForm = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const ref = useRef();
 
@@ -28,12 +31,12 @@ const MessageForm = () => {
       resetForm();
       setSubmitting(false);
     } catch (err) {
-      setStatus(err.message);
+      setStatus(t(err.message));
     }
   };
 
   const validationSchema = object().shape({
-    text: string().trim().required('Nobody loves empty messages'),
+    text: string().trim().required(t('emptyMessage')),
   });
 
   const formik = useFormik({
@@ -56,14 +59,14 @@ const MessageForm = () => {
             <Form.Control
               isInvalid={!!formik.errors.text}
               name="text"
-              placeholder="Enter message"
+              placeholder={t('enterMessage')}
               ref={ref}
               value={formik.values.text}
               onChange={formik.handleChange}
             />
             <InputGroup.Append>
               <Button variant="primary" size="sm" type="submit">
-                Submit
+                {t('submit')}
               </Button>
             </InputGroup.Append>
           </InputGroup>

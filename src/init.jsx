@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import i18next from 'i18next';
 import io from 'socket.io-client';
 
+import resources from './locales/index.js';
 import reducer, { actions } from './slices/index.js';
 import UserContext from './userContext.js';
 import setFakeUserName from './utils.js';
@@ -11,6 +14,12 @@ import setFakeUserName from './utils.js';
 import App from './components/App';
 
 const run = ({ channels, messages, currentChannelId }) => {
+  i18next.use(initReactI18next).init({
+    fallbackLng: 'en',
+    lng: 'ru',
+    resources,
+  });
+
   const store = configureStore({ reducer });
 
   store.dispatch(actions.addChannels({ channels }));

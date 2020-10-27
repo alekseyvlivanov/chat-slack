@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import i18next from 'i18next';
 
 import Channel from './Channel';
 import getModal from './modals/index.js';
@@ -17,6 +19,11 @@ const renderModal = ({ modalInfo, hideModal }) => {
 };
 
 const ChannelsList = () => {
+  const { t } = useTranslation();
+  const switchLanguage = async () => {
+    await i18next.changeLanguage(t('nextLang'));
+  };
+
   const { channels, currentChannelId } = useSelector(
     (state) => state.channelsInfo,
   );
@@ -36,15 +43,27 @@ const ChannelsList = () => {
         xs="3"
         className="d-flex flex-column h-100 border-right overflow-auto"
       >
-        <div className="d-flex pt-2 pb-1 px-1">
-          <span className="h6 m-0">Channels</span>
+        <div className="d-flex justify-content-between align-items-center pt-2 pb-1 px-1">
+          <span className="my-0 p-0">
+            <span className="h6 m-0 p-0">{t('channels')}</span>
+          </span>
           <Button
             variant
             size="sm"
-            className="ml-auto my-0 p-0"
+            className="my-0 p-0"
             onClick={handleShowAdd}
           >
-            <span className="h6 m-0 p-0">+</span>
+            <span className="h6 m-0 p-0" title={t('add')}>
+              +
+            </span>
+          </Button>
+          <Button
+            variant
+            size="sm"
+            className="my-0 p-0"
+            onClick={switchLanguage}
+          >
+            <span className="h6 m-0 p-0">{t('lang')}</span>
           </Button>
         </div>
         <Nav variant="pills" className="mt-1 mb-3 d-flex flex-column">

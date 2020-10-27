@@ -57,13 +57,13 @@ const channelsSlice = createSlice({
   },
   extraReducers: {
     [addChannelAsync.rejected]: () => {
-      throw new Error("Can't add channel, try again later");
+      throw new Error('cantAddChannel');
     },
     [removeChannelAsync.rejected]: () => {
-      throw new Error("Can't remove channel, try again later");
+      throw new Error('cantRemoveChannel');
     },
     [renameChannelAsync.rejected]: () => {
-      throw new Error("Can't rename channel, try again later");
+      throw new Error('cantRenameChannel');
     },
   },
 });

@@ -27,7 +27,7 @@ const messagesSlice = createSlice({
   },
   extraReducers: {
     [addMessageAsync.rejected]: () => {
-      throw new Error("Can't send message, try again later");
+      throw new Error('cantSendMessage');
     },
     [channelsActions.removeChannel]: (state, { payload: { id } }) => {
       state.messages = state.messages.filter(

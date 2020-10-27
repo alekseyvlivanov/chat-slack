@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { actions } from '../slices/index.js';
@@ -16,6 +17,8 @@ const Channel = (props) => {
     handleShowRemove,
     handleShowRename,
   } = props;
+
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -41,10 +44,10 @@ const Channel = (props) => {
           <Dropdown.Toggle className="mb-2" split variant={variant} />
           <Dropdown.Menu>
             <Dropdown.Item as="button" onClick={handleShowRemove}>
-              Remove
+              {t('remove')}
             </Dropdown.Item>
             <Dropdown.Item as="button" onClick={handleShowRename}>
-              Rename
+              {t('rename')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

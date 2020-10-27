@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -13,6 +14,8 @@ const { renameChannelAsync } = asyncActions;
 const Rename = (props) => {
   const { modalInfo, onHide } = props;
   const channelNames = modalInfo.data.channels.map((channel) => channel.name);
+
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const ref = useRef();
@@ -27,17 +30,17 @@ const Rename = (props) => {
       );
       onHide();
     } catch (err) {
-      setStatus(err.message);
+      setStatus(t(err.message));
     }
   };
 
   const validationSchema = object().shape({
     name: string()
       .trim()
-      .min(3, 'Must be 3 to 20 characters')
-      .max(20, 'Must be 3 to 20 characters')
-      .required('Name is required')
-      .notOneOf(channelNames, 'Must be unique'),
+      .min(3, t('mustBe3To20'))
+      .max(20, t('mustBe3To20'))
+      .required(t('nameIsRequired'))
+      .notOneOf(channelNames, t('mustBeUnique')),
   });
 
   const formik = useFormik({
@@ -57,14 +60,14 @@ const Rename = (props) => {
       <Form noValidate onSubmit={formik.handleSubmit}>
         <fieldset disabled={formik.isSubmitting}>
           <Modal.Header closeButton>
-            <Modal.Title>Rename channel?</Modal.Title>
+            <Modal.Title>{t('renameChannel')}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <Form.Control
               isInvalid={!!formik.errors.name}
               name="name"
-              placeholder="Enter channel name"
+              placeholder={t('enterChannelName')}
               ref={ref}
               value={formik.values.name}
               onChange={formik.handleChange}
@@ -76,10 +79,10 @@ const Rename = (props) => {
 
           <Modal.Footer>
             <Button variant="secondary" onClick={onHide}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button variant="warning" type="submit">
-              Rename
+              {t('rename')}
             </Button>
           </Modal.Footer>
         </fieldset>

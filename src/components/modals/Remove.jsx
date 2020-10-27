@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 
@@ -12,6 +13,8 @@ const { removeChannelAsync } = asyncActions;
 const Remove = (props) => {
   const { modalInfo, onHide } = props;
 
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const ref = useRef();
 
@@ -20,7 +23,7 @@ const Remove = (props) => {
       await dispatch(removeChannelAsync({ id: modalInfo.data.id }));
       onHide();
     } catch (err) {
-      setStatus(err.message);
+      setStatus(t(err.message));
     }
   };
 
@@ -40,7 +43,7 @@ const Remove = (props) => {
       <Form noValidate onSubmit={formik.handleSubmit}>
         <fieldset disabled={formik.isSubmitting}>
           <Modal.Header closeButton>
-            <Modal.Title>Remove channel?</Modal.Title>
+            <Modal.Title>{t('removeChannel')}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -57,10 +60,10 @@ const Remove = (props) => {
 
           <Modal.Footer>
             <Button variant="secondary" onClick={onHide}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button variant="danger" type="submit">
-              Remove
+              {t('remove')}
             </Button>
           </Modal.Footer>
         </fieldset>
