@@ -16,7 +16,7 @@ import App from './components/App';
 const run = ({ channels, messages, currentChannelId }) => {
   i18next.use(initReactI18next).init({
     fallbackLng: 'en',
-    lng: 'ru',
+    lng: 'en',
     resources,
   });
 
