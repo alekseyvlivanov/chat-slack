@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import i18next from 'i18next';
 
 import Channel from './Channel';
 import getModal from './modals/index.js';
@@ -19,9 +18,9 @@ const renderModal = ({ modalInfo, hideModal }) => {
 };
 
 const ChannelsList = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const switchLanguage = async () => {
-    await i18next.changeLanguage(t('nextLang'));
+    await i18n.changeLanguage(t('nextLang'));
   };
 
   const { channels, currentChannelId } = useSelector(
