@@ -1,5 +1,5 @@
-[![Github Actions Status](https://github.com/alekseyvlivanov/frontend-project-lvl4/workflows/Node%20CI/badge.svg)](https://github.com/alekseyvlivanov/frontend-project-lvl4/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6db02351074e2fe3a478/maintainability)](https://codeclimate.com/github/alekseyvlivanov/frontend-project-lvl4/maintainability)
+[![Github Actions Status](https://github.com/alekseyvlivanov/chat-slack/workflows/Node%20CI/badge.svg)](https://github.com/alekseyvlivanov/chat-slack/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1ea0583b4a114bd840a1/maintainability)](https://codeclimate.com/github/alekseyvlivanov/chat-slack/maintainability)
 
 ## Requirements
 

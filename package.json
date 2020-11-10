@@ -1,5 +1,5 @@
 {
-  "name": "frontend-project-lvl4",
+  "name": "chat-slack",
   "version": "1.0.0",
   "description": "Chat (Slack)",
   "keywords": [
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:alekseyvlivanov/frontend-project-lvl4.git"
+    "url": "git@github.com:alekseyvlivanov/chat-slack.git"
   },
   "author": "Aleksey Ivanov",
   "license": "ISC",
