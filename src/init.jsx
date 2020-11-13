@@ -9,11 +9,15 @@ import io from 'socket.io-client';
 import resources from './locales/index.js';
 import reducer, { actions } from './slices/index.js';
 import UserContext from './userContext.js';
-import setFakeUserName from './utils.js';
+import { changeFavicon, setFakeUserName } from './utils.js';
 
 import App from './components/App';
 
+import favicon from '../assets/favicon.ico';
+
 const run = ({ channels, messages, currentChannelId }) => {
+  changeFavicon(favicon);
+
   i18next.use(initReactI18next).init({
     fallbackLng: 'en',
     lng: 'en',
