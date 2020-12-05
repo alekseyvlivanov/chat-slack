@@ -2,9 +2,9 @@
 
 ## Overview
 
-This is a simple Slack-like chat application.
+This is a Slack-like chat application.
 
-#### DEMO - https://chat-slack-chessiah.herokuapp.com
+#### DEMO - https://chat-slack-aleksey-vl-ivanov.herokuapp.com
 
 [![Node CI](https://github.com/alekseyvlivanov/chat-slack/workflows/Node%20CI/badge.svg)](https://github.com/alekseyvlivanov/chat-slack/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1ea0583b4a114bd840a1/maintainability)](https://codeclimate.com/github/alekseyvlivanov/chat-slack/maintainability)
