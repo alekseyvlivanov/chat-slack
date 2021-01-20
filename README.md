@@ -31,8 +31,8 @@ This is a Slack-like chat application.
 - [Redux Toolkit](https://redux-toolkit.js.org) for efficient Redux development
 - [axios](https://github.com/axios/axios) for AJAX
 - styling with [React Bootstrap](https://react-bootstrap.github.io)
-- interface localization with [react-i18next](https://react.i18next.com/)
-- [faker.js](https://github.com/marak/Faker.js/) to generate realistic fake username
+- interface localization with [react-i18next](https://react.i18next.com)
+- [faker.js](https://github.com/marak/Faker.js) to generate realistic fake username
 - [JavaScript Cookie](https://github.com/js-cookie/js-cookie) to store username
 - [Formik](https://github.com/formium/formik) to build forms
 - validating form data with [Yup](https://github.com/jquense/yup)
@@ -43,7 +43,7 @@ This is a Slack-like chat application.
 ```
 $ git clone ...
 $ cd chat-slack
-$ make  install
+$ make install
 ```
 
 then install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
