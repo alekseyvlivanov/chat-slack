@@ -11,12 +11,8 @@ import { actions } from '../slices/index.js';
 const { setCurrentChannel } = actions;
 
 const Channel = (props) => {
-  const {
-    channel,
-    currentChannelId,
-    handleShowRemove,
-    handleShowRename,
-  } = props;
+  const { channel, currentChannelId, handleShowRemove, handleShowRename } =
+    props;
 
   const { t } = useTranslation();
 
